@@ -12,7 +12,7 @@ st.set_page_config(page_title=apptitle, page_icon='random',
 
 @st.cache_resource
 def load_model():
-	with open("modelHeart.pkl", "rb") as f:
+	with open("modelheart.pkl", "rb") as f:
 		model = pickle.load(f)
 	return model
 model = load_model()
@@ -21,9 +21,9 @@ model = load_model()
 # even when loading data from the web, manipulating large datasets, 
 # or performing expensive computations. This is done with the @st.cache decorator.
 @st.cache_data()
-def prediction(age, currentSmoker, prevalentStroke, prevalentHyp, diabetes, sysBP):
+def prediction(age, currentSmoker, prevalentStroke, prevalentHyp, diabetes, sysBP, diaBP):
 	# Making predictions
-	prediction = model.predict([[age, currentSmoker, prevalentStroke, prevalentHyp, diabetes, sysBP]])
+	prediction = model.predict([[age, currentSmoker, prevalentStroke, prevalentHyp, diabetes, sysBP, diaBP]])
 	if prediction == 0:
 		pred = 'Healthy heart'
 	else:
@@ -39,7 +39,7 @@ def main():
 	#front end elements of the web page 
 	# pick colors from: https://www.w3schools.com/tags/ref_colornames.asp
 	html_temp = """ <div style ="background-color:AntiqueWhite;padding:15px"> 
-       <h1 style ="color:black;text-align:center;">A heart health assessment app</h1> 
+       <h1 style ="color:black;text-align:center;">A loan application assessment app</h1> 
        </div> <br/>"""
 
     #display the front end aspect
@@ -69,10 +69,13 @@ def main():
 	sysBP = st.sidebar.slider('sysBP', 80, 300, 132)
 	st.write('sysBP', sysBP)
 
+	diaBP = st.sidebar.slider('diaBP', 40, 150, 80)
+	st.write('diaBP', diaBP)
+    
 	result =""
 	# assessment button
 	if st.button("Predict"):
-		assessment = prediction(age, currentSmoker, prevalentStroke, prevalentHyp, diabetes, sysBP)
+		assessment = prediction(age, currentSmoker, prevalentStroke, prevalentHyp, diabetes, sysBP, diaBP)
 		st.success('**System assessment says:** {}'.format(assessment))
 
 	# if st.button("Reset"):
