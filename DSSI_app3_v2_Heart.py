@@ -66,7 +66,7 @@ def main():
 	diabetes = st.sidebar.slider('diabetes', 0, 1, 0)
 	st.write('diabetes', diabetes)
 
-	annual_inc = st.sidebar.slider('sysBP', 80, 300, 132)
+	sysBP = st.sidebar.slider('sysBP', 80, 300, 132)
 	st.write('sysBP', sysBP)
 
 	result =""
