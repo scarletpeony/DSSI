@@ -12,7 +12,7 @@ st.set_page_config(page_title=apptitle, page_icon='random',
 
 @st.cache_resource
 def load_model():
-	with open("https://github.com/scarletpeony/DSSI/blob/main/modelHeart.pkl", "rb") as f:
+	with open("modelheart.pkl", "rb") as f:
 		model = pickle.load(f)
 	return model
 model = load_model()
@@ -21,9 +21,9 @@ model = load_model()
 # even when loading data from the web, manipulating large datasets, 
 # or performing expensive computations. This is done with the @st.cache decorator.
 @st.cache_data()
-def prediction(int_rate, emp_length, annual_inc, delinq_2yrs, fico_range_high,revol_bal, open_acc):
+def prediction(age, currentSmoker, prevalentStroke, prevalentHyp, diabetes, sysBP):
 	# Making predictions
-	prediction = model.predict([[int_rate, emp_length, annual_inc, delinq_2yrs,fico_range_high,revol_bal, open_acc]])
+	prediction = model.predict([[age, currentSmoker, prevalentStroke, prevalentHyp, diabetes, sysBP]])
 	if prediction == 0:
 		pred = 'Healthy heart'
 	else:
